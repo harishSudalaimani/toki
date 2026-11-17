@@ -13,7 +13,7 @@ class CliTests(unittest.TestCase):
                 parser.parse_args(["alarm", "set", "not-a-time", "--repeat", "weekly"])
         self.assertEqual(error.exception.code, 2)
 
-    def test_invalid_timer_duration_has_clear_error(self):
+    def test_timer_shell_command_validates_duration(self):
         stderr = io.StringIO()
         with contextlib.redirect_stderr(stderr):
             result = main(["timer", "nonsense"])
