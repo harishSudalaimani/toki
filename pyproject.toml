@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "toki-time-companion"
 version = "0.1.0"
-description = "A sarcastic cross-platform command-line time companion"
+description = "A minimal cross-platform command-line time companion"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }

@@ -42,8 +42,10 @@ class Countdown:
         return cls(duration, time.monotonic())
 
     def remaining(self, now: float | None = None) -> int:
-        elapsed = (time.monotonic() if now is None else now) - self.started_at
-        return max(0, self.duration - int(elapsed))
+        return max(0, self.duration - int(self.elapsed(now)))
+
+    def elapsed(self, now: float | None = None) -> float:
+        return max(0.0, (time.monotonic() if now is None else now) - self.started_at)
 
     @property
     def complete(self) -> bool:

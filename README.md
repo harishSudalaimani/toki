@@ -1,8 +1,8 @@
 # TOKI
 
-**Your time. Your rules. Our attitude.**
+**A quiet companion for your time.**
 
-TOKI is a small, cross-platform command-line clock, alarm manager, and countdown timer for Python 3.11+. It uses only the Python standard library at runtime.
+TOKI is a minimal, cross-platform command-line clock, alarm manager, countdown timer, and stopwatch for Python 3.11+. It uses only the Python standard library at runtime.
 
 ## Install
 
@@ -50,11 +50,17 @@ toki timer 90s
 toki timer 1h30m
 ```
 
+The countdown animates a progress bar in an interactive terminal. To measure elapsed time instead, run the stopwatch and press Ctrl+C to stop it:
+
+```bash
+toki stopwatch
+```
+
 Alarm data is stored as JSON in the platform's user configuration directory: `%APPDATA%/toki` on Windows, `~/Library/Application Support/toki` on macOS, or `$XDG_CONFIG_HOME/toki` (default `~/.config/toki`) on Linux and other Unix systems. Set `XDG_CONFIG_HOME` to choose a different Unix config root.
 
 ## How it works
 
-The dashboard and `toki timer` keep the process in the foreground and poll alarms while they run. Alarm notifications are a visible terminal message and bell; timers use `time.monotonic()` for elapsed-time accuracy. TOKI has no background service: alarms only trigger while a TOKI process is running, and countdowns are not saved across process exits. The current MVP supports one-time and daily alarms; weekday recurrence and snoozing are not included.
+The dashboard and `toki timer` keep the process in the foreground and poll alarms while they run. When an alarm or timer completes, a large rabbit dances in the terminal alongside an alert sound. Alerts try the platform's system sound (or an available Linux sound player) and fall back to the terminal bell, followed by a visible terminal message. A terminal may suppress its bell; in that case, install/configure a system audio player. Timers use `time.monotonic()` for elapsed-time accuracy. TOKI has no background service: alarms only trigger while a TOKI process is running, and countdowns are not saved across process exits. The current MVP supports one-time and daily alarms; weekday recurrence and snoozing are not included.
 
 Alarm JSON is written atomically. If it is malformed or cannot be read, TOKI reports the file path and leaves it untouched rather than replacing it with an empty alarm list.
 
