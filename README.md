@@ -2,82 +2,92 @@
 
 **A quiet companion for your time.**
 
-TOKI is a minimal, cross-platform command-line clock, alarm manager, and countdown timer for Python 3.11+. It uses only the Python standard library at runtime.
+TOKI is a cross-platform terminal clock, alarm manager, and countdown timer for Python 3.11+. It has no third-party runtime dependencies. The PyPI package is `toki-time`; it installs the `toki` command.
 
 ## Install
 
-From PyPI:
-
-```bash
-python -m pip install toki-time
-```
-
-Or use pipx for an isolated install:
+With pipx:
 
 ```bash
 pipx install toki-time
-```
-
-From a checkout:
-
-```bash
-python -m pip install .
-```
-
-The PyPI distribution is `toki-time` and installs the `toki` command. TOKI (TIME) is the product name shown in the interface and documentation.
-
-## Use
-
-Launch the live dashboard and press Ctrl+C to exit:
-
-```bash
 toki
 ```
 
-Use alarm and timer commands at the dashboard's `>` prompt, or run them directly in your shell by adding the `toki` prefix. The dashboard shows a `HELP` hint while idle; type `help` to see each command and what it does. Use unique alarm labels to enable, disable, or delete alarms. Labels with spaces need quotes. Unnamed alarms get labels such as `Alarm` and `Alarm 2`. A one-time alarm set for a time that has passed today is scheduled for tomorrow.
+Or with pip:
+
+```bash
+python -m pip install toki-time
+toki
+```
+
+## Use
+
+Run `toki` to open the live dashboard. Type `help` at the dashboard prompt for its command list, or run `toki --help` in your shell. Press Ctrl+C to close the dashboard.
+
+Commands can be entered at the dashboard prompt without the `toki` prefix, or run directly from the shell with it.
+
+### Alarms
+
+Alarms use your local time in 24-hour `HH:MM` format. They are one-time by default; use `--daily` or `--repeat daily` for a daily alarm. Give alarms distinct labels to manage them individually, and quote labels containing spaces. If you omit a label, TOKI assigns one such as `Alarm` or `Alarm 2`.
+
+At the dashboard prompt:
 
 ```text
 alarm set 07:30
-alarm set 07:30 --label "Gym"
+alarm set 07:30 --label "GYM"
 alarm set 07:30 --daily
 alarm list
-alarm disable "Gym"
-alarm enable "Gym"
-alarm delete "Gym"
+alarm enable "GYM"
+alarm disable "GYM"
+alarm delete "GYM"
 ```
 
-Start or stop a countdown from the same prompt. Units can be combined once each:
+The same commands work from the shell:
+
+```bash
+toki alarm set 07:30 --label "GYM"
+toki alarm list
+toki alarm disable "GYM"
+```
+
+A one-time alarm set for a time that has already passed today is scheduled for tomorrow. Actions on a repeated label apply to every alarm with that label.
+
+### Timer
+
+Timer durations use `s` for seconds, `m` for minutes, and `h` for hours. Units can be combined once each.
+
+At the dashboard prompt:
 
 ```text
-timer 30m
-timer 3h
 timer 90s
+timer 30m
 timer 1h30m
 timer stop
 ```
 
-The same commands work directly in the shell, for example:
+From the shell, start a standalone timer with:
 
 ```bash
-toki alarm set 07:30 --label "Gym"
-toki alarm list
-toki alarm disable "Gym"
 toki timer 30m
 ```
 
-The standalone timer can be cancelled with Ctrl+C. Inside the dashboard, use `timer stop`.
+Press Ctrl+C to cancel a standalone timer. `timer stop` is available at the dashboard prompt.
 
-Alarm data is stored as JSON in the platform's user configuration directory: `%APPDATA%/toki` on Windows, `~/Library/Application Support/toki` on macOS, or `$XDG_CONFIG_HOME/toki` (default `~/.config/toki`) on Linux and other Unix systems. Set `XDG_CONFIG_HOME` to choose a different Unix config root.
+## Alerts and data
 
-## How it works
+Keep TOKI running for alarms to alert. Alarm settings are saved between launches, but a shell command such as `toki alarm set ...` exits after saving; use the dashboard to keep the alarm scheduler running. Timers are not saved when TOKI closes. Interactive alerts play a synthesized duck sound for up to one minute; press any key to silence it. The dashboard adjusts to the terminal size without flashing. If the system has no supported sound player, TOKI reports that audio is unavailable.
 
-The dashboard keeps the clock, active timer, and upcoming alarms visible together. Alarm and timer alerts use a simple text card and play TOKI's synthesized duck quack; interactive alerts repeat it for up to one minute and stop when any key is pressed. Screens resize to fit the terminal without flashing effects. If no native sound player is available, TOKI reports that audio is unavailable instead of triggering the terminal's visual bell. Alarms and timers require TOKI to remain running; countdowns are not saved after exit. TOKI supports one-time and daily alarms.
+Alarm data is stored in `alarms.json` under the platform's user configuration directory:
 
-Alarm JSON is written atomically. If it is malformed or cannot be read, TOKI reports the file path and leaves it untouched rather than replacing it with an empty alarm list.
+- Windows: `%APPDATA%/toki`
+- macOS: `~/Library/Application Support/toki`
+- Linux and other Unix systems: `$XDG_CONFIG_HOME/toki`, or `~/.config/toki` by default
+
+The JSON file is written atomically. If it is malformed or cannot be read, TOKI reports its path and leaves it untouched.
 
 ## Development
 
-Install the project in editable mode, then run the standard-library test suite from the repository root:
+Install an editable copy and run the test suite from the repository root:
 
 ```bash
 python -m pip install -e .
