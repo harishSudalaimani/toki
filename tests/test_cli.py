@@ -18,7 +18,7 @@ class CliTests(unittest.TestCase):
         with contextlib.redirect_stderr(stderr):
             result = main(["timer", "nonsense"])
         self.assertEqual(result, 2)
-        self.assertIn("duration", stderr.getvalue())
+        self.assertIn("DURATION", stderr.getvalue())
 
 
 if __name__ == "__main__":
