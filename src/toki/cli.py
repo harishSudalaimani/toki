@@ -26,10 +26,12 @@ HELP_NOTICE_SECONDS = 12.0
 NOTICE_SECONDS = 4.0
 
 DASHBOARD_HELP = (
-    'ALARM SET HH:MM [--LABEL "GYM"] [--DAILY]\n'
-    "  CREATE AN ALARM; DAILY REPEATS IT EACH DAY.\n"
-    "ALARM SET HH:MM --REPEAT ONCE|DAILY\n"
-    "  SET THE ALARM REPEAT SCHEDULE.\n"
+    'ALARM SET 07:30 --LABEL "GYM"\n'
+    "  CREATE A ONE-TIME ALARM.\n"
+    'ALARM SET 07:30 --LABEL "GYM" --DAILY\n'
+    "  CREATE A DAILY ALARM.\n"
+    "ALARM SET 07:30 --REPEAT DAILY\n"
+    "  SET THE ALARM TO REPEAT EACH DAY.\n"
     "ALARM LIST\n"
     "  SHOW SAVED ALARMS AND THEIR STATUS.\n"
     'ALARM ENABLE "GYM"\n'
@@ -174,7 +176,10 @@ def _handle_dashboard_command(
         action = words[1].lower()
         if action == "set":
             if len(words) < 3:
-                raise ValueError("use alarm set HH:MM [--label LABEL] [--daily]")
+                raise ValueError(
+                    'example: alarm set 07:30 --label "GYM" --daily; '
+                    "omit --daily for a one-time alarm"
+                )
             alarm_time = words[2]
             label = None
             repeat = "once"
@@ -378,7 +383,8 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "Run `toki` to open the dashboard. You can also use these commands directly\n"
             "in your shell, or enter them at the dashboard prompt without the `toki` prefix:\n"
-            "  toki alarm set 07:30 [--label LABEL] [--daily]\n"
+            "  toki alarm set 07:30\n"
+            '  toki alarm set 07:30 --label "GYM" --daily\n'
             "  toki alarm list | toki alarm enable LABEL | toki alarm disable LABEL\n"
             "  toki alarm delete LABEL\n"
             "  toki timer 25m\n"
