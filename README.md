@@ -15,10 +15,10 @@ python -m pip install .
 Or install an isolated copy with pipx:
 
 ```bash
-pipx install tokii
+pipx install toki-time-companion
 ```
 
-The next PyPI release is configured as `tokii` and installs the `toki` command. Version 0.1.0, already published as `toki-time-companion`, remains under its original name.
+The PyPI distribution is `toki-time-companion` and installs the `toki` command. TOKI (TIME) is the product name shown in the interface and documentation.
 
 ## Use
 

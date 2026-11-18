@@ -3,8 +3,8 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tokii"
-version = "0.1.0"
+name = "toki-time-companion"
+version = "0.1.1"
 description = "TOKI (TIME), a minimal cross-platform command-line clock, alarm, and timer"
 readme = "README.md"
 requires-python = ">=3.11"
