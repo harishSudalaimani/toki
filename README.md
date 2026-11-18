@@ -6,19 +6,25 @@ TOKI is a minimal, cross-platform command-line clock, alarm manager, and countdo
 
 ## Install
 
+From PyPI:
+
+```bash
+python -m pip install toki-time
+```
+
+Or use pipx for an isolated install:
+
+```bash
+pipx install toki-time
+```
+
 From a checkout:
 
 ```bash
 python -m pip install .
 ```
 
-Or install an isolated copy with pipx:
-
-```bash
-pipx install toki-time-companion
-```
-
-The PyPI distribution is `toki-time-companion` and installs the `toki` command. TOKI (TIME) is the product name shown in the interface and documentation.
+The PyPI distribution is `toki-time` and installs the `toki` command. TOKI (TIME) is the product name shown in the interface and documentation.
 
 ## Use
 
